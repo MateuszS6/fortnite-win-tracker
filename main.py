@@ -1,8 +1,8 @@
 import time
 
 
-f1 = "npulsive.txt"
-f2 = "dog.txt"
+f1 = "fortnite-win-tracker/data/npulsive.txt"
+f2 = "fortnite-win-tracker/data/dogeous.txt"
 
 
 while True:
