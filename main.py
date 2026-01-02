@@ -13,9 +13,9 @@ while True:
     time.sleep(0.1)
     print("[2] Edit stats")
     time.sleep(0.1)
-    options = input("Select option: ")
+    options = int(input("Select option: "))
 
-    if options == "1":
+    if options == 1:
         mainAcc = open(f1,"r")
         for line in mainAcc:
             fields = line.strip().split(",")
@@ -52,23 +52,23 @@ while True:
         tWins = tSolos + int(mainDuos) + int(mainSquads)
         print(f" {str(tWins)} wins")
     
-    elif options == "2":
+    elif options == 2:
         print("[1] Npulsive")
         time.sleep(0.1)
         print("[2] Dog")
         time.sleep(0.1)
-        acc = input("Select account: ")
+        acc = int(input("Select account: "))
 
-        if acc == "1":
+        if acc == 1:
             print("[1] Solo")
             time.sleep(0.1)
             print("[2] Duo")
             time.sleep(0.1)
             print("[3] Squad")
             time.sleep(0.1)
-            i_mode = input("Select gamemode: ")
-            
-            if i_mode == "1":
+            i_mode = int(input("Select gamemode: "))
+        
+            if i_mode == 1:
                 i_solos = input("Wins to add: ")
                 mainAcc = open(f1,"r+")
                 for line in mainAcc:
@@ -88,7 +88,7 @@ while True:
                     else:
                         print(f"[Npulsive] You now have {nSolos} solo wins!")
             
-            elif i_mode == "2":
+            elif i_mode == 2:
                 i_duos = input("Wins to add: ")
                 mainAcc = open(f1,"r+")
                 for line in mainAcc:
@@ -102,7 +102,7 @@ while True:
                 mainAcc.close()
                 print(f"[Npulsive] You now have {nDuos} duo wins!")
             
-            elif i_mode == "3":
+            elif i_mode == 3:
                 i_squads = input("Wins to add: ")
                 mainAcc = open(f1,"r+")
                 for line in mainAcc:
@@ -119,7 +119,7 @@ while True:
             else:
                 print("Invalid input.")
         
-        elif acc == "2":
+        elif acc == 2:
             ii_solos = input("Wins to add: ")
             otherAcc = open(f2,"r+")
             for line in otherAcc:
