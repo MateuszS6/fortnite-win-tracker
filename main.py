@@ -5,6 +5,45 @@ f1 = "fortnite-win-tracker/data/npulsive.txt"
 f2 = "fortnite-win-tracker/data/dogeous.txt"
 
 
+def view_stats():
+    npulsive_data = open(f1,"r")
+    for line in npulsive_data:
+        wins = line.strip().split(",")
+    solos = wins[0]
+    duos = wins[1]
+    squads = wins[2]
+    npulsive_data.close()
+    print()
+
+    print("Npulsive")
+    time.sleep(0.1)
+    print(f" {solos} solos")
+    time.sleep(0.1)
+    print(f" {duos} duos")
+    time.sleep(0.1)
+    print(f" {squads} squads")
+    time.sleep(0.1)
+
+    dogeous_data = open(f2,"r")
+    for line in dogeous_data:
+        wins = line.strip().split(",")
+    other_solos = wins[0]
+    dogeous_data.close()
+
+    print("Dog")
+    time.sleep(0.1)
+    print(f" {wins[0]} solos")
+    time.sleep(0.1)
+
+    print("TOTAL")
+    time.sleep(0.1)
+    total_solos = int(solos) + int(other_solos)
+    print(f" {str(total_solos)} solos")
+    time.sleep(0.1)
+    total_wins = total_solos + int(duos) + int(squads)
+    print(f" {str(total_wins)} wins")
+
+
 while True:
     time.sleep(0.5)
     print(" > Fortnite Win Tracker")
@@ -16,41 +55,7 @@ while True:
     options = int(input("Select option: "))
 
     if options == 1:
-        mainAcc = open(f1,"r")
-        for line in mainAcc:
-            fields = line.strip().split(",")
-        mainSolos = fields[0]
-        mainDuos = fields[1]
-        mainSquads = fields[2]
-        mainAcc.close()
-
-        print()
-        print("Npulsive")
-        time.sleep(0.1)
-        print(f" {mainSolos} solos")
-        time.sleep(0.1)
-        print(f" {mainDuos} duos")
-        time.sleep(0.1)
-        print(f" {mainSquads} squads")
-        time.sleep(0.1)
-
-        otherAcc = open(f2,"r")
-        for line in otherAcc:
-            fields = line.strip().split(",")
-        otherSolos = fields[0]
-        otherAcc.close()
-
-        print("Dog")
-        time.sleep(0.1)
-        print(f" {fields[0]} solos")
-        time.sleep(0.1)
-        print("TOTAL")
-        time.sleep(0.1)
-        tSolos = int(mainSolos) + int(otherSolos)
-        print(f" {str(tSolos)} solos")
-        time.sleep(0.1)
-        tWins = tSolos + int(mainDuos) + int(mainSquads)
-        print(f" {str(tWins)} wins")
+        view_stats()
     
     elif options == 2:
         print("[1] Npulsive")
@@ -66,72 +71,66 @@ while True:
             time.sleep(0.1)
             print("[3] Squad")
             time.sleep(0.1)
-            i_mode = int(input("Select gamemode: "))
+            gamemode = int(input("Select gamemode: "))
         
-            if i_mode == 1:
-                i_solos = input("Wins to add: ")
-                mainAcc = open(f1,"r+")
-                for line in mainAcc:
-                    fields = line.strip().split(",")
-                nSolos = str(int(fields[0]) + int(i_solos))
-                if i_solos == "0":
-                    print(f"[Npulsive] Bruh you still have {nSolos} solo wins.")
+            if gamemode == 1:
+                s = int(input("Wins to add: "))
+                npulsive_data = open(f1,"r+")
+                for line in npulsive_data:
+                    wins = line.strip().split(",")
+                new_solos = str(int(wins[0]) + s)
+                if s == 0:
+                    print(f"[Npulsive] Bruh you still have {new_solos} solo wins.")
                 else:
-                    oDuos = str(fields[1])
-                    oSquads = str(fields[2])
-                    mainAcc.truncate(0)
-                    mainAcc.seek(0)
-                    mainAcc.write(nSolos + "," + oDuos + "," + oSquads)
-                    mainAcc.close()
-                    if int(i_solos) < 0:
-                        print(f"[Npulsive] Bruh you're back at {nSolos} solo wins.")
+                    duos = str(wins[1])
+                    squads = str(wins[2])
+                    npulsive_data.truncate(0)
+                    npulsive_data.seek(0)
+                    npulsive_data.write(f"{new_solos}, {wins[1]}, {wins[2]}")
+                    npulsive_data.close()
+                    if s < 0:
+                        print(f"[Npulsive] Bruh you're back at {new_solos} solo wins.")
                     else:
-                        print(f"[Npulsive] You now have {nSolos} solo wins!")
+                        print(f"[Npulsive] You now have {new_solos} solo wins!")
             
-            elif i_mode == 2:
-                i_duos = input("Wins to add: ")
-                mainAcc = open(f1,"r+")
-                for line in mainAcc:
-                    fields = line.split(", ")
-                oSolos = str(fields[0])
-                nDuos = str(int(fields[1]) + int(i_duos))
-                oSquads = str(fields[2])
-                mainAcc.truncate(0)
-                mainAcc.seek(0)
-                mainAcc.write(f"{oSolos}, {nDuos}, {oSquads}")
-                mainAcc.close()
-                print(f"[Npulsive] You now have {nDuos} duo wins!")
+            elif gamemode == 2:
+                d = int(input("Wins to add: "))
+                npulsive_data = open(f1,"r+")
+                for line in npulsive_data:
+                    wins = line.split(", ")
+                new_duos = str(int(wins[1]) + d)
+                npulsive_data.truncate(0)
+                npulsive_data.seek(0)
+                npulsive_data.write(f"{wins[0]}, {new_duos}, {wins[2]}")
+                npulsive_data.close()
+                print(f"[Npulsive] You now have {new_duos} duo wins!")
             
-            elif i_mode == 3:
-                i_squads = input("Wins to add: ")
-                mainAcc = open(f1,"r+")
-                for line in mainAcc:
-                    fields = line.strip().split(",")
-                oSolos = str(fields[0])
-                oDuos = str(fields[1])
-                nSquads = str(int(fields[2]) + int(i_squads))
-                mainAcc.truncate(0)
-                mainAcc.seek(0)
-                mainAcc.write(f"{oSolos}, {oDuos}, {nSquads}")
-                mainAcc.close()
-                print(f"[Npulsive] You now have {nSquads} squad wins!")
+            elif gamemode == 3:
+                sq = int(input("Wins to add: "))
+                npulsive_data = open(f1,"r+")
+                for line in npulsive_data:
+                    wins = line.strip().split(",")
+                new_squads = str(int(wins[2]) + sq)
+                npulsive_data.truncate(0)
+                npulsive_data.seek(0)
+                npulsive_data.write(f"{wins[0]}, {wins[1]}, {new_squads}")
+                npulsive_data.close()
+                print(f"[Npulsive] You now have {new_squads} squad wins!")
             
             else:
                 print("Invalid input.")
         
         elif acc == 2:
-            ii_solos = input("Wins to add: ")
-            otherAcc = open(f2,"r+")
-            for line in otherAcc:
-                fields = line.strip().split(",")
-            nSolos = str(int(fields[0]) + int(ii_solos))
-            oDuos = str(fields[1])
-            oSquads = str(fields[2])
-            otherAcc.truncate(0)
-            otherAcc.seek(0)
-            otherAcc.write(f"{nSolos}, {oDuos}, {oSquads}")
-            otherAcc.close()
-            print(f"[Dogeous] You now have {nSolos} solo wins!")
+            n = int(input("Wins to add: "))
+            dogeous_data = open(f2,"r+")
+            for line in dogeous_data:
+                wins = line.strip().split(",")
+            new_solos = str(int(wins[0]) + n)
+            dogeous_data.truncate(0)
+            dogeous_data.seek(0)
+            dogeous_data.write(f"{new_solos}, {wins[1]}, {wins[2]}")
+            dogeous_data.close()
+            print(f"[Dogeous] You now have {new_solos} solo wins!")
         
         else:
             print("Invalid input.")
