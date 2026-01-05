@@ -5,7 +5,7 @@ f1 = "fortnite-win-tracker/data/npulsive.txt"
 f2 = "fortnite-win-tracker/data/dogeous.txt"
 
 
-def fetch_stats(file_path):
+def read_stats(file_path):
     data_file = open(file_path, "r")
     for line in data_file:
         wins = line.strip().split(",")
@@ -14,12 +14,16 @@ def fetch_stats(file_path):
 
 
 def write_stats(file_path, solos, duos, squads):
-    pass
+    data_file = open(file_path, "r+")
+    data_file.truncate(0)
+    data_file.seek(0)
+    data_file.write(f"{str(solos)}, {str(duos)}, {str(squads)}")
+    data_file.close()
 
 
-def view_stats():
-    npulsive_wins = fetch_stats(f1)
-    dogeous_wins = fetch_stats(f2)
+def print_stats():
+    npulsive_wins = read_stats(f1)
+    dogeous_wins = read_stats(f2)
 
     print()
     print("Npulsive")
@@ -56,7 +60,7 @@ while True:
     options = int(input("Select option: "))
 
     if options == 1:
-        view_stats()
+        print_stats()
     
     elif options == 2:
         print("[1] Npulsive")
@@ -76,16 +80,12 @@ while True:
         
             if gamemode == 1:
                 s = int(input("Wins to add: "))
-                npulsive_wins = fetch_stats(f1)
+                npulsive_wins = read_stats(f1)
                 new_solos = int(npulsive_wins[0]) + s
                 if s == 0:
                     print(f"[Npulsive] Bruh you still have {str(new_solos)} solo wins.")
                 else:
-                    npulsive_data = open(f1,"r")
-                    npulsive_data.truncate(0)
-                    npulsive_data.seek(0)
-                    npulsive_data.write(f"{str(new_solos)}, {npulsive_wins[1]}, {npulsive_wins[2]}")
-                    npulsive_data.close()
+                    write_stats(f1, new_solos, npulsive_wins[1], npulsive_wins[2])
                     if s < 0:
                         print(f"[Npulsive] Bruh you're back at {str(new_solos)} solo wins.")
                     else:
@@ -93,24 +93,16 @@ while True:
             
             elif gamemode == 2:
                 d = int(input("Wins to add: "))
-                npulsive_data = fetch_stats(f1)
+                npulsive_wins = read_stats(f1)
                 new_duos = int(npulsive_wins[1]) + d
-                npulsive_data = open(f1,"r+")
-                npulsive_data.truncate(0)
-                npulsive_data.seek(0)
-                npulsive_data.write(f"{npulsive_wins[0]}, {str(new_duos)}, {npulsive_wins[2]}")
-                npulsive_data.close()
+                write_stats(f1, npulsive_wins[0], new_duos, npulsive_wins[2])
                 print(f"[Npulsive] You now have {str(new_duos)} duo wins!")
             
             elif gamemode == 3:
                 sq = int(input("Wins to add: "))
-                npulsive_wins = fetch_stats(f1)
+                npulsive_wins = read_stats(f1)
                 new_squads = int(npulsive_wins[2]) + sq
-                npulsive_data = open(f1,"r+")
-                npulsive_data.truncate(0)
-                npulsive_data.seek(0)
-                npulsive_data.write(f"{npulsive_wins[0]}, {npulsive_wins[1]}, {str(new_squads)}")
-                npulsive_data.close()
+                write_stats(f1, npulsive_wins[0], npulsive_wins[1], new_squads)
                 print(f"[Npulsive] You now have {str(new_squads)} squad wins!")
             
             else:
@@ -118,13 +110,9 @@ while True:
         
         elif acc == 2:
             n = int(input("Wins to add: "))
-            dogeous_wins = fetch_stats(f2)
+            dogeous_wins = read_stats(f2)
             new_solos = int(dogeous_wins[0]) + n
-            dogeous_data = open(f2,"r+")
-            dogeous_data.truncate(0)
-            dogeous_data.seek(0)
-            dogeous_data.write(f"{str(new_solos)}, {dogeous_wins[1]}, {dogeous_wins[2]}")
-            dogeous_data.close()
+            write_stats(f2, new_solos, 0, 0)
             print(f"[Dogeous] You now have {str(new_solos)} solo wins!")
         
         else:
