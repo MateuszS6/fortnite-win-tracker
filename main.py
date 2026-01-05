@@ -71,43 +71,39 @@ while True:
             print("[3] Squad")
             time.sleep(0.1)
             gamemode = int(input("Select gamemode: "))
+
+            if gamemode not in [1, 2, 3]:
+                print("Invalid input.")
+                continue
         
+            n = int(input("Wins to add: "))
+            npulsive_wins = read_stats(f1)
+            new_wins = npulsive_wins[gamemode - 1] + n
+
             if gamemode == 1:
-                s = int(input("Wins to add: "))
-                npulsive_wins = read_stats(f1)
-                new_solos = npulsive_wins[0] + s
-                if s == 0:
-                    print(f"[Npulsive] Bruh you still have {new_solos} solo wins.")
+                if n == 0:
+                    print(f"[Npulsive] Bruh you still have {new_wins} solo wins.")
                 else:
-                    write_stats(f1, new_solos, npulsive_wins[1], npulsive_wins[2])
-                    if s < 0:
-                        print(f"[Npulsive] Bruh you're back at {new_solos} solo wins.")
+                    write_stats(f1, new_wins, npulsive_wins[1], npulsive_wins[2])
+                    if n < 0:
+                        print(f"[Npulsive] Bruh you're back at {new_wins} solo wins.")
                     else:
-                        print(f"[Npulsive] You now have {new_solos} solo wins!")
+                        print(f"[Npulsive] You now have {new_wins} solo wins!")
             
             elif gamemode == 2:
-                d = int(input("Wins to add: "))
-                npulsive_wins = read_stats(f1)
-                new_duos = npulsive_wins[1] + d
-                write_stats(f1, npulsive_wins[0], new_duos, npulsive_wins[2])
-                print(f"[Npulsive] You now have {new_duos} duo wins!")
+                write_stats(f1, npulsive_wins[0], new_wins, npulsive_wins[2])
+                print(f"[Npulsive] You now have {new_wins} duo wins!")
             
             elif gamemode == 3:
-                sq = int(input("Wins to add: "))
-                npulsive_wins = read_stats(f1)
-                new_squads = npulsive_wins[2] + sq
-                write_stats(f1, npulsive_wins[0], npulsive_wins[1], new_squads)
-                print(f"[Npulsive] You now have {new_squads} squad wins!")
-            
-            else:
-                print("Invalid input.")
+                write_stats(f1, npulsive_wins[0], npulsive_wins[1], new_wins)
+                print(f"[Npulsive] You now have {new_wins} squad wins!")
         
         elif acc == 2:
             n = int(input("Wins to add: "))
             dogeous_wins = read_stats(f2)
-            new_solos = dogeous_wins[0] + n
-            write_stats(f2, new_solos, 0, 0)
-            print(f"[Dogeous] You now have {new_solos} solo wins!")
+            new_wins = dogeous_wins[0] + n
+            write_stats(f2, new_wins, 0, 0)
+            print(f"[Dogeous] You now have {new_wins} solo wins!")
         
         else:
             print("Invalid input.")
