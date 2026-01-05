@@ -15,8 +15,6 @@ def read_stats(file_path):
 
 def write_stats(file_path, solos, duos, squads):
     data_file = open(file_path, "r+")
-    data_file.truncate(0)
-    data_file.seek(0)
     data_file.write(f"{str(solos)}, {str(duos)}, {str(squads)}")
     data_file.close()
 
