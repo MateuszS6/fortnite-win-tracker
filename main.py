@@ -1,8 +1,14 @@
+from dotenv import load_dotenv
+import os
 import time
 
+load_dotenv()
 
-f1 = "fortnite-win-tracker/data/npulsive.txt" # TODO: have names as environment variables
-f2 = "fortnite-win-tracker/data/dogeous.txt"
+ACCOUNT_1 = os.getenv("ACCOUNT_1")
+ACCOUNT_2 = os.getenv("ACCOUNT_2")
+
+f1 = f"data/{ACCOUNT_1}.txt"
+f2 = f"data/{ACCOUNT_2}.txt"
 
 
 def read_stats(file_path):
@@ -20,7 +26,7 @@ def print_stats():
     account_2_wins = read_stats(f2)
 
     print()
-    print("Npulsive")
+    print(ACCOUNT_1)
     time.sleep(0.1)
     print(f" {account_1_wins[0]} solos")
     time.sleep(0.1)
@@ -29,7 +35,7 @@ def print_stats():
     print(f" {account_1_wins[2]} squads")
     time.sleep(0.1)
 
-    print("Dog")
+    print(ACCOUNT_2)
     time.sleep(0.1)
     print(f" {account_2_wins[0]} solos")
     time.sleep(0.1)
@@ -57,9 +63,9 @@ while True:
         print_stats()
     
     elif options == 2:
-        print("[1] Npulsive")
+        print(f"[1] {ACCOUNT_1}")
         time.sleep(0.1)
-        print("[2] Dog")
+        print(f"[2] {ACCOUNT_2}")
         time.sleep(0.1)
         acc = int(input("Select account: "))
 
@@ -82,28 +88,28 @@ while True:
 
             if gamemode == 1:
                 if n == 0:
-                    print(f"[Npulsive] Bruh you still have {new_wins} solo wins.")
+                    print(f"[{ACCOUNT_1}] Bruh you still have {new_wins} solo wins.")
                 else:
                     write_stats(f1, new_wins, account_1_wins[1], account_1_wins[2])
                     if n < 0:
-                        print(f"[Npulsive] Bruh you're back at {new_wins} solo wins.")
+                        print(f"[{ACCOUNT_1}] Bruh you're back at {new_wins} solo wins.")
                     else:
-                        print(f"[Npulsive] You now have {new_wins} solo wins!")
+                        print(f"[{ACCOUNT_1}] You now have {new_wins} solo wins!")
             
             elif gamemode == 2:
                 write_stats(f1, account_1_wins[0], new_wins, account_1_wins[2])
-                print(f"[Npulsive] You now have {new_wins} duo wins!")
+                print(f"[{ACCOUNT_1}] You now have {new_wins} duo wins!")
             
             elif gamemode == 3:
                 write_stats(f1, account_1_wins[0], account_1_wins[1], new_wins)
-                print(f"[Npulsive] You now have {new_wins} squad wins!")
+                print(f"[{ACCOUNT_1}] You now have {new_wins} squad wins!")
         
         elif acc == 2:
             n = int(input("Wins to add: "))
             account_2_wins = read_stats(f2)
             new_wins = account_2_wins[0] + n
             write_stats(f2, new_wins, 0, 0)
-            print(f"[Dogeous] You now have {new_wins} solo wins!")
+            print(f"[{ACCOUNT_2}] You now have {new_wins} solo wins!")
         
         else:
             print("Invalid input.")
