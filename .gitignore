@@ -140,7 +140,7 @@ venv.bak/
 # Ignore everything inside data/
 data/*
 # …except this file
-# !data/README.md
+!data/README.md
 # ------
 
 # Spyder project settings
